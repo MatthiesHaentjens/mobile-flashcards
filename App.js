@@ -1,21 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { combineReducers, createStore } from "redux";
+import { Provider } from "react-redux";
+import { SafeAreaView, StyleSheet} from "react-native";
+import DeckDashboard from "./components/DeckDashboard";
+import decks from "./reducers";
+import applyMiddleware from "./middleware";
+
+const store = createStore(combineReducers({decks}), applyMiddleware);
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <StatusBar backgroundColor={styles.backgroundColor} barStyle="light-content" />
+        <DeckDashboard />
+      </SafeAreaView>
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "purple",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
