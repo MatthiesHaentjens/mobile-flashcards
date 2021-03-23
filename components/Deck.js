@@ -4,6 +4,7 @@ import { Dimensions, Image, StyleSheet, View, Text } from "react-native";
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 export const Deck = ({ data }) => {
+  const { questions } = data
   return (
     <View style={styles.item}>
       <Image
@@ -11,6 +12,7 @@ export const Deck = ({ data }) => {
         style={{ width: windowWidth * 0.8, height: windowHeight * 0.5 }}
       />
       <Text style={styles.title}>{data.title}</Text>
+      <Text style={styles.questions}>{questions.length} Questions</Text>
     </View>
   );
 };
@@ -28,4 +30,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
   },
+  questions: {
+    fontSize: 20
+  }
 });
