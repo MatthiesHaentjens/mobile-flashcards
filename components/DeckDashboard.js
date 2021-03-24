@@ -1,50 +1,60 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StyleSheet, View, Text, Button } from "react-native";
 import { connect } from "react-redux";
-import { Header } from "./Header";
 import DeckList from "./DeckList";
-
-const Tab = createBottomTabNavigator();
-
-const AddDeck = () => {
-	return <Text>Add</Text>;
-};
-
-const OpenDeck = () => {
-	return <Text>Delete</Text>;
-};
 
 class DeckDashboard extends Component {
 	render() {
-		const { decks } = this.props.decks
+		const { decks } = this.props.decks;
 		return (
-			<View>
-				<Header title={"Decks"} />
-				<Text style={styles.title}>{Object.keys(decks).length} decks</Text>
+			<View style={styles.container}>
+				<Text style={styles.title}>
+					{Object.keys(decks).length} decks
+				</Text>
 				<DeckList />
-				{/* <Tab.Navigator>
-					<Tab.Screen name="NEW DECK" component={AddDeck} />
-					<Tab.Screen name="OPEN DECK" component={Deck} />
-				</Tab.Navigator> */}
+				<View style={styles.navigation}>
+					<Button
+						title="New Deck"
+						onPress={() =>
+							this.props.navigation.navigate("New Deck")
+						}
+					/>
+					<Button
+						title="Open Deck"
+						onPress={() =>
+							this.props.navigation.navigate("New Deck")
+						}
+					/>
+				</View>
 			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		width: "100%",
+	},
 	title: {
 		fontSize: 20,
 		textAlign: "center",
-		marginTop: 20,
-		marginBottom: 0
-	}
-})
+		marginTop: 40,
+		marginBottom: 0,
+	},
+	navigation: {
+		flexDirection: "row",
+		marginBottom: 40,
+		color: "green"
+	},
+});
 
-function mapStatesToProps(decks){
+function mapStatesToProps(decks) {
 	return {
 		decks,
 	};
-};
+}
 
-export default connect(mapStatesToProps)(DeckDashboard)
+export default connect(mapStatesToProps)(DeckDashboard);

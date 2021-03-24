@@ -80,18 +80,19 @@ export function _getDecks() {
   });
 }
 
-export function _addDeck(title) {
+export function _addDeck(title, image) {
+    const id = generateUID()
     return new Promise((res, rej) => {
       setTimeout(() => {
         decks = {
           ...decks,
-          [generateUID()]: {
-            id: generateUID(),
+          [id]: {
+            id: id,
+            image: image,
             title: title,
             questions: []
           }
         };
-  
         res(decks[id]);
       }, 1000);
     });

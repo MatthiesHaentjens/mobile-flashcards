@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, FlatList, StyleSheet, StatusBar, Dimensions, Image, Text  } from "react-native";
+import { View, FlatList, StyleSheet, Dimensions, Image, Text  } from "react-native";
 import { handleInitialData } from "../actions";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -17,7 +17,7 @@ class DeckList extends Component {
 
     const renderItem = ({ item }) => {
       const { image, title, questions } = item[1]
-      console.log(item)
+
       return (
         <View style={styles.item}>
           <Image
@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 40,
-    marginBottom: 80 
+    marginBottom: 80,
+    width: "100%"
   },
   item: {
     backgroundColor: "#99ffff",
