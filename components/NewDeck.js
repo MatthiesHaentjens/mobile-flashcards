@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { handleAddDeck } from "../actions";
 
 const NewDeck = ({ dispatch, navigation }) => {
+	console.log(navigation)
 	
     const [text, setText] = React.useState('');
     const [image, setImage] = React.useState('https://i.pinimg.com/originals/52/bc/39/52bc3928fd63daa22ebfb555f9ae07dd.jpg');

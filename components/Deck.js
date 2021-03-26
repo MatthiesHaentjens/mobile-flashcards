@@ -13,8 +13,8 @@ import { handleDeleteDeck } from "../actions";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
-const Deck = ({ decks, dispatch, navigation }) => {
-	const deck = decks.decks.xxx;
+const Deck = ({ route, dispatch, navigation }) => {
+	const deck = route.params.deck;
 
 	const deleteDeck = () => {
 		dispatch(handleDeleteDeck(deck.id));

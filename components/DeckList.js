@@ -1,16 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-	View,
-	FlatList,
-	StyleSheet,
-	Dimensions,
-	Image,
-	Text,
-} from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { handleInitialData } from "../actions";
-
-const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+import DeckListItem from "./DeckListItem";
 
 class DeckList extends Component {
 	componentDidMount() {
@@ -21,21 +13,11 @@ class DeckList extends Component {
 	render() {
 		const { decks } = this.props.decks;
 		const decksArray = Object.entries(decks);
+		const navigation = this.props.navigation;
 
-		const renderItem = ( { item }, index) => {
-			const { image, title, questions } = item[1];
-
+		const renderItem = ({ item }, index) => {
 			return (
-				<View key={index} style={styles.item}>
-					<Image
-						source={{ uri: image }}
-						style={styles.image}
-					/>
-					<Text style={styles.title}>{title}</Text>
-					<Text style={styles.questions}>
-						{questions.length} Questions
-					</Text>
-				</View>
+				<DeckListItem item={item} key={index} navigation={navigation} />
 			);
 		};
 
@@ -59,31 +41,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		marginTop: 40,
-		marginBottom: 80,
+		marginBottom: 40,
 		width: "100%",
-	},
-	item: {
-		backgroundColor: "#99ffff",
-		padding: 20,
-		marginHorizontal: 20,
-    borderColor: "#99ffff",
-    borderWidth: 2,
-    borderRadius: 10
-	},
-  image: {
-		marginBottom: 20,
-		width: windowWidth * 0.8,
-		height: windowHeight * 0.4,
-    borderRadius: 5
-	},
-	title: {
-		fontSize: 32,
-		textAlign: "center",
-		marginBottom: 10,
-	},
-	questions: {
-		fontSize: 20,
-		textAlign: "center",
 	},
 });
 

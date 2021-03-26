@@ -10,9 +10,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import NewDeck from "./components/NewDeck";
 import Deck from "./components/Deck";
-import Question from "./components/Question";
 import Quiz from "./components/Quiz";
 import AddQuestion from "./components/AddQuestion";
+import CompleteQuiz from "./components/CompleteQuiz";
 
 const store = createStore(combineReducers({ decks }), applyMiddleware);
 
@@ -27,8 +27,9 @@ export default function App() {
 						<Stack.Screen name="Home" component={DeckDashboard} />
 						<Stack.Screen name="New Deck" component={NewDeck} />
 						<Stack.Screen name="Open Deck" component={Deck} />
-						<Stack.Screen name="Quiz" component={Question} />
+						<Stack.Screen name="Quiz" component={Quiz} />
 						<Stack.Screen name="Add Question" component={AddQuestion} />
+						<Stack.Screen name="Complete Quiz" component={CompleteQuiz} />
 					</Stack.Navigator>
 				</SafeAreaView>
 			</Provider>

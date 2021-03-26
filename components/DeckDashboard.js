@@ -6,23 +6,18 @@ import DeckList from "./DeckList";
 class DeckDashboard extends Component {
 	render() {
 		const { decks } = this.props.decks;
+		const navigation = this.props.navigation
 		return (
 			<View style={styles.container}>
 				<Text style={styles.title}>
 					{Object.keys(decks).length} decks
 				</Text>
-				<DeckList />
+				<DeckList navigation={navigation}/>
 				<View style={styles.navigation}>
 					<Button
 						title="New Deck"
 						onPress={() =>
-							this.props.navigation.navigate("New Deck")
-						}
-					/>
-					<Button
-						title="Open Deck"
-						onPress={() =>
-							this.props.navigation.navigate("Open Deck")
+							navigation.navigate("New Deck")
 						}
 					/>
 				</View>
