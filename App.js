@@ -1,5 +1,4 @@
 import "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
@@ -10,6 +9,10 @@ import applyMiddleware from "./middleware";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import NewDeck from "./components/NewDeck";
+import Deck from "./components/Deck";
+import Question from "./components/Question";
+import Quiz from "./components/Quiz";
+import AddQuestion from "./components/AddQuestion";
 
 const store = createStore(combineReducers({ decks }), applyMiddleware);
 
@@ -23,7 +26,9 @@ export default function App() {
 					<Stack.Navigator initialRouteName="Home">
 						<Stack.Screen name="Home" component={DeckDashboard} />
 						<Stack.Screen name="New Deck" component={NewDeck} />
-						<Stack.Screen name="Open Deck" component={NewDeck} />
+						<Stack.Screen name="Open Deck" component={Deck} />
+						<Stack.Screen name="Quiz" component={Question} />
+						<Stack.Screen name="Add Question" component={AddQuestion} />
 					</Stack.Navigator>
 				</SafeAreaView>
 			</Provider>

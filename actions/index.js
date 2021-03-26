@@ -1,4 +1,10 @@
-import { _getDecks, _addDeck } from "../utils/_DATA";
+import {
+	_getDecks,
+	_addDeck,
+	_deleteDeck,
+	_deleteQuestion,
+  _addQuestion,
+} from "../utils/_DATA";
 export const RECEIVE_DECKS = "RECEIVE_DECKS";
 export const ADD_DECK = "ADD_DECK";
 export const DELETE_DECK = "DELETE_DECK";
@@ -25,7 +31,7 @@ export function handleInitialData() {
 export function addDeck(deck) {
 	return {
 		type: ADD_DECK,
-		deck
+		deck,
 	};
 }
 
@@ -33,30 +39,60 @@ export function handleAddDeck(title, image) {
 	return (dispatch) => {
 		return _addDeck(title, image)
 			.then((deck) => {
-        console.log(deck)
 				dispatch(addDeck(deck));
 			})
 			.catch((error) => console.log(error));
 	};
 }
 
-export function deleteDeck(deck) {
+export function deleteDeck(decks) {
 	return {
 		type: DELETE_DECK,
+		decks,
+	};
+}
+
+export function handleDeleteDeck(id) {
+	return (dispatch) => {
+		return _deleteDeck(id)
+			.then((decks) => {
+				dispatch(deleteDeck(decks));
+			})
+			.catch((error) => console.log(error));
+	};
+}
+
+export function addQuestion(deck) {
+	return {
+		type: ADD_QUESTION,
 		deck,
 	};
 }
 
-export function addQuestion(question) {
-	return {
-		type: ADD_QUESTION,
-		question,
+export function handleAddQuestion(question, answer, deckId) {
+	return (dispatch) => {
+		return _addQuestion(question, answer, deckId)
+			.then((deck) => {
+				console.log(deck);
+				dispatch(addQuestion(deck));
+			})
+			.catch((error) => console.log(error));
 	};
 }
 
-export function deleteQuestion(question) {
+export function deleteQuestion(deck) {
 	return {
 		type: DELETE_QUESTION,
-		question,
+		deck,
 	};
+}
+
+export function handleDeleteQuestion(questionId, deckId) {
+  return (dispatch) => {
+    return _deleteQuestion(questionId, deckId)
+      .then((deck) => {
+        dispatch(deleteQuestion(deck));
+      })
+      .catch((error) => console.log(error));
+  };
 }

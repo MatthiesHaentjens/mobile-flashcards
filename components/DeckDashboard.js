@@ -22,7 +22,7 @@ class DeckDashboard extends Component {
 					<Button
 						title="Open Deck"
 						onPress={() =>
-							this.props.navigation.navigate("New Deck")
+							this.props.navigation.navigate("Open Deck")
 						}
 					/>
 				</View>
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		textAlign: "center",
 		marginTop: 40,
-		marginBottom: 0,
 	},
 	navigation: {
 		flexDirection: "row",
