@@ -30,6 +30,9 @@ const DeckListItem = ({ item, navigation }) => {
 	);
 };
 
+// To do: Pressing on a deck in the list should generate an animation, 
+// and the app should route to an individual deck view.
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,

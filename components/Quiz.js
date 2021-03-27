@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Button, StyleSheet, View, Text, TouchableOpacity } from "react-native";
@@ -12,8 +12,6 @@ const Quiz = ({ route, dispatch, navigation }) => {
 	const [index, setIndex] = useState(0);
 	const [correct, setCorrect] = useState(0);
 	const [answered, setAnswer] = useState([]);
-
-	console.log(answered)
 
 	const { deck } = route.params;
 
@@ -48,11 +46,23 @@ const Quiz = ({ route, dispatch, navigation }) => {
 		navigation.goBack();
 	};
 
+	useEffect(() => {
+		const unsubscribe = navigation.addListener('focus', () => {
+			setIndex(0);
+			setCorrect(0);
+			setAnswer([]);
+		});
+		return () => {
+			unsubscribe;
+		};
+	}, [navigation]);
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.header}>
 				Question {index + 1} out of {deck.questions.length}
 			</Text>
+			<Text style={styles.tab}>Tab to show the answer</Text>
 			<CardFlip
 				style={styles.cardContainer}
 				ref={(card) => (this.card = card)}
@@ -100,6 +110,8 @@ const Quiz = ({ route, dispatch, navigation }) => {
 	);
 };
 
+// To do: Buttons are included to allow the student to mark their guess as 'Correct' or 'Incorrect'
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -110,6 +122,10 @@ const styles = StyleSheet.create({
 	header: {
 		marginBottom: 40,
 		fontSize: 16,
+	},
+	tab: {
+		fontSize: 20,
+		fontStyle: "italic",
 	},
 	cardContainer: {
 		width: 320,

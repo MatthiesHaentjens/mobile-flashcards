@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
 	Dimensions,
@@ -24,6 +24,14 @@ const Deck = ({ route, dispatch, navigation }) => {
 	const goBack = () => {
 		navigation.goBack();
 	};
+
+	useEffect(() => {
+		const unsubscribe = navigation.addListener('focus', () => {
+		});
+		return () => {
+			unsubscribe;
+		};
+	}, [navigation]);
 
 	return (
 		<SafeAreaView style={styles.container}>
