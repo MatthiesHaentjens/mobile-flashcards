@@ -31,6 +31,7 @@ class DeckList extends Component {
 					showsHorizontalScrollIndicator={false}
 					style={{ flex: 1 }}
 					pagingEnabled
+					alwaysBounceHorizontal={true}
 				/>
 			</View>
 		);

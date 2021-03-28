@@ -40,7 +40,7 @@ const Quiz = ({ route, dispatch, navigation }) => {
 	};
 
 	const deleteQuestion = () => {
-		dispatch(handleDeleteQuestion(item.id, deckId));
+		dispatch(handleDeleteQuestion(deck.questions[index].id, deck.id));
 		goBack();
 	};
 
@@ -59,91 +59,102 @@ const Quiz = ({ route, dispatch, navigation }) => {
 		};
 	}, [navigation]);
 
-	return (
-		<View style={styles.container}>
-			<Text style={styles.header}>
-				Question {index + 1} out of {deck.questions.length}
-			</Text>
-			<Text style={styles.tab}>Tab to show the answer</Text>
-			<CardFlip
-				style={styles.cardContainer}
-				ref={(card) => (this.card = card)}
-			>
-				<TouchableOpacity
-					activeOpacity={1}
-					style={[styles.card, styles.card1]}
-					onPress={() => this.card.flip()}
+	if (deck.questions.length === 0) {
+		return (
+			<View style={styles.container}>
+				<Text fontSize={20}>Sorry nothing here...</Text>
+				<Text fontSize={14}>
+					Go back and create a question to start
+				</Text>
+			</View>
+		);
+	} else {
+		return (
+			<View style={styles.container}>
+				<Text style={styles.header}>
+					Question {index + 1} out of {deck.questions.length}
+				</Text>
+				<Text style={styles.tab}>Tab to show the answer</Text>
+				<CardFlip
+					style={styles.cardContainer}
+					ref={(ref) => (this.card = ref)}
 				>
-					<Text style={styles.label}>
-						{deck.questions[index].question}
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					activeOpacity={1}
-					style={[styles.card, styles.card2]}
-					onPress={() => this.card.flip()}
-				>
-					<Text style={styles.label}>
-						{deck.questions[index].answer}
-					</Text>
-				</TouchableOpacity>
-			</CardFlip>
-			<View style={styles.navigate}>
-				<TouchableOpacity onPress={previousQuestion}>
-					<FontAwesome
-						name="chevron-circle-left"
-						size={30}
+					<TouchableOpacity
+						activeOpacity={1}
+						style={[styles.card, styles.card1]}
+						onPress={() => this.card.flip()}
+					>
+						<Text style={styles.label}>
+							{deck.questions[index].question}
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						activeOpacity={1}
+						style={[styles.card, styles.card2]}
+						onPress={() => this.card.flip()}
+					>
+						<Text style={styles.label}>
+							{deck.questions[index].answer}
+						</Text>
+					</TouchableOpacity>
+				</CardFlip>
+				<View style={styles.navigate}>
+					<TouchableOpacity onPress={previousQuestion}>
+						<FontAwesome
+							name="chevron-circle-left"
+							size={30}
+							color="blue"
+						/>
+					</TouchableOpacity>
+					<TouchableOpacity
+						disabled={answered.includes(index)}
+						onPress={answerCorrect}
+					>
+						<FontAwesome
+							name="thumbs-up"
+							size={50}
+							style={
+								!answered.includes(index)
+									? styles.thumbsUp
+									: styles.disabled
+							}
+						/>
+					</TouchableOpacity>
+					<TouchableOpacity
+						disabled={answered.includes(index)}
+						onPress={answerIncorrect}
+					>
+						<FontAwesome
+							name="thumbs-down"
+							size={50}
+							style={
+								!answered.includes(index)
+									? styles.thumbsDown
+									: styles.disabled
+							}
+						/>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={nextQuestion}>
+						<FontAwesome
+							name="chevron-circle-right"
+							size={30}
+							color="blue"
+						/>
+					</TouchableOpacity>
+				</View>
+				{index + 1 === deck.questions.length ? (
+					<Button
 						color="blue"
+						title="Complete Quiz"
+						onPress={completeQuiz}
 					/>
-				</TouchableOpacity>
-				<TouchableOpacity
-					disabled={answered.includes(index)}
-					onPress={answerCorrect}
-				>
-					<FontAwesome
-						name="thumbs-up"
-						size={50}
-						style={
-							!answered.includes(index)
-								? styles.thumbsUp
-								: styles.disabled
-						}
-					/>
-				</TouchableOpacity>
-				<TouchableOpacity
-					disabled={answered.includes(index)}
-					onPress={answerIncorrect}
-				>
-					<FontAwesome
-						name="thumbs-down"
-						size={50}
-						style={
-							!answered.includes(index)
-								? styles.thumbsDown
-								: styles.disabled
-						}
-					/>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={nextQuestion}>
-					<FontAwesome
-						name="chevron-circle-right"
-						size={30}
-						color="blue"
-					/>
+				) : null}
+				<TouchableOpacity onPress={deleteQuestion}>
+					<Text style={styles.delete}>Delete Question</Text>
 				</TouchableOpacity>
 			</View>
-			{index + 1 === deck.questions.length ? (
-				<Button
-					color="blue"
-					title="Complete Quiz"
-					onPress={completeQuiz}
-				/>
-			) : null}
-			<TouchableOpacity onPress={deleteQuestion}>
-				<Text style={styles.delete}>Delete Question</Text>
-			</TouchableOpacity>
-		</View>
-	);
+		);
+	}
 };
 
 const styles = StyleSheet.create({

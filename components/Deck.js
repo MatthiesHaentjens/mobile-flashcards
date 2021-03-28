@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import {
 	Dimensions,
 	Button,
@@ -14,7 +14,9 @@ import { handleDeleteDeck } from "../actions";
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const Deck = ({ route, dispatch, navigation }) => {
-	const deck = route.params.deck;
+
+	const deckId = route.params.deck.id;
+	const deck = useSelector(state => state.decks[deckId])
 
 	const deleteDeck = () => {
 		dispatch(handleDeleteDeck(deck.id));
@@ -24,14 +26,6 @@ const Deck = ({ route, dispatch, navigation }) => {
 	const goBack = () => {
 		navigation.goBack();
 	};
-
-	useEffect(() => {
-		const unsubscribe = navigation.addListener('focus', () => {
-		});
-		return () => {
-			unsubscribe;
-		};
-	}, [navigation]);
 
 	return (
 		<SafeAreaView style={styles.container}>

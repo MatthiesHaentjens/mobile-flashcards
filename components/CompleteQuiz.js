@@ -5,11 +5,11 @@ import { Button, StyleSheet, View, Text } from "react-native";
 const CompleteQuiz = ({ route, navigation }) => {
 	const { questions, correct } = route.params;
 	const percentCorrect = Math.round((correct / questions) * 100);
-	console.log(questions, correct);
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Awesome your done!</Text>
+			<Text style={styles.title}>you scored:</Text>
 			<Text style={styles.result}>{percentCorrect}%</Text>
 			<Button
 				title="Restart Quiz"

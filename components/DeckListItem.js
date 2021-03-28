@@ -8,6 +8,7 @@ import {
 	Text,
 	Button,
 } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -16,21 +17,33 @@ const DeckListItem = ({ item, navigation }) => {
 
 	return (
 		<View style={styles.item}>
-			<Image source={{ uri: image }} style={styles.image} />
-			<Text style={styles.title}>{title}</Text>
-			<Text style={styles.questions}>{questions.length} Questions</Text>
-			<Button
-				style={styles.button}
-				title="Open Deck"
-				onPress={() => navigation.navigate("Open Deck", {
-                    deck: item[1]
-                })}
-			/>
+			<TouchableOpacity
+				onPress={() =>
+					navigation.navigate("Open Deck", {
+						deck: item[1],
+					})
+				}
+			>
+				<Image source={{ uri: image }} style={styles.image} />
+				<Text style={styles.title}>{title}</Text>
+				<Text style={styles.questions}>
+					{questions.length} Questions
+				</Text>
+				<Button
+					style={styles.button}
+					title="Open Deck"
+					onPress={() =>
+						navigation.navigate("Open Deck", {
+							deck: item[1],
+						})
+					}
+				/>
+			</TouchableOpacity>
 		</View>
 	);
 };
 
-// To do: Pressing on a deck in the list should generate an animation, 
+// To do: Pressing on a deck in the list should generate an animation,
 // and the app should route to an individual deck view.
 
 const styles = StyleSheet.create({

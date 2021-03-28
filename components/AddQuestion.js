@@ -9,11 +9,9 @@ import {
 import { connect } from "react-redux";
 import { handleAddQuestion } from "../actions";
 
-const AddQuestion = ({ route, dispatch, navigation }) => {
+const AddQuestion = ({ decks, route, dispatch, navigation }) => {
 	
-
     const { deckId } = route.params;
-	console.log(deckId)
 	const [question, setQuestion] = React.useState("");
 	const [answer, setAnswer] = React.useState("");
 
@@ -29,7 +27,9 @@ const AddQuestion = ({ route, dispatch, navigation }) => {
 	};
 
 	const goBack = () => {
-		navigation.goBack();
+		navigation.navigate("Open Deck", {
+			deck: decks.decks[deckId]
+		});
 	};
 
 	return (
@@ -57,8 +57,6 @@ const AddQuestion = ({ route, dispatch, navigation }) => {
 		</SafeAreaView>
 	);
 };
-
-// To do: Submitting the form correctly adds the question to the deck.
 
 const styles = StyleSheet.create({
 	container: {
@@ -93,4 +91,10 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default connect()(AddQuestion);
+function mapStatesToProps(decks) {
+	return {
+		decks,
+	}
+}
+
+export default connect(mapStatesToProps)(AddQuestion);
