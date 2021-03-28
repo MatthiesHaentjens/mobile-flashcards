@@ -3,10 +3,8 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { Button, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import CardFlip from "react-native-card-flip";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { handleDeleteQuestion } from "../actions";
-import completeQuiz from "./CompleteQuiz";
 
 const Quiz = ({ route, dispatch, navigation }) => {
 	const [index, setIndex] = useState(0);
@@ -25,16 +23,20 @@ const Quiz = ({ route, dispatch, navigation }) => {
 		index > 0 ? setIndex(index - 1) : setIndex(index);
 	};
 
-	const answer = () => {
+	const answerCorrect = () => {
 		setAnswer(answered.concat(index));
 		setCorrect(correct + 1);
+	};
+
+	const answerIncorrect = () => {
+		setAnswer(answered.concat(index));
 	};
 
 	const completeQuiz = () => {
 		navigation.navigate("Complete Quiz", {
 			questions: deck.questions.length,
-			correct: correct
-		})
+			correct: correct,
+		});
 	};
 
 	const deleteQuestion = () => {
@@ -47,7 +49,7 @@ const Quiz = ({ route, dispatch, navigation }) => {
 	};
 
 	useEffect(() => {
-		const unsubscribe = navigation.addListener('focus', () => {
+		const unsubscribe = navigation.addListener("focus", () => {
 			setIndex(0);
 			setCorrect(0);
 			setAnswer([]);
@@ -88,17 +90,51 @@ const Quiz = ({ route, dispatch, navigation }) => {
 			</CardFlip>
 			<View style={styles.navigate}>
 				<TouchableOpacity onPress={previousQuestion}>
-					<Text style={styles.answer}>Previous</Text>
+					<FontAwesome
+						name="chevron-circle-left"
+						size={30}
+						color="blue"
+					/>
 				</TouchableOpacity>
-				<TouchableOpacity disabled={answered.includes(index)} onPress={answer}>
-					<Text style={!answered.includes(index) ? styles.correct : styles.disabled}>Correct</Text>
+				<TouchableOpacity
+					disabled={answered.includes(index)}
+					onPress={answerCorrect}
+				>
+					<FontAwesome
+						name="thumbs-up"
+						size={50}
+						style={
+							!answered.includes(index)
+								? styles.thumbsUp
+								: styles.disabled
+						}
+					/>
+				</TouchableOpacity>
+				<TouchableOpacity
+					disabled={answered.includes(index)}
+					onPress={answerIncorrect}
+				>
+					<FontAwesome
+						name="thumbs-down"
+						size={50}
+						style={
+							!answered.includes(index)
+								? styles.thumbsDown
+								: styles.disabled
+						}
+					/>
 				</TouchableOpacity>
 				<TouchableOpacity onPress={nextQuestion}>
-					<Text style={styles.answer}>Next</Text>
+					<FontAwesome
+						name="chevron-circle-right"
+						size={30}
+						color="blue"
+					/>
 				</TouchableOpacity>
 			</View>
 			{index + 1 === deck.questions.length ? (
 				<Button
+					color="blue"
 					title="Complete Quiz"
 					onPress={completeQuiz}
 				/>
@@ -110,8 +146,6 @@ const Quiz = ({ route, dispatch, navigation }) => {
 	);
 };
 
-// To do: Buttons are included to allow the student to mark their guess as 'Correct' or 'Incorrect'
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -120,12 +154,13 @@ const styles = StyleSheet.create({
 		backgroundColor: "#F5FCFF",
 	},
 	header: {
-		marginBottom: 40,
+		marginBottom: 20,
 		fontSize: 16,
 	},
 	tab: {
-		fontSize: 20,
+		fontSize: 18,
 		fontStyle: "italic",
+		marginBottom: 20,
 	},
 	cardContainer: {
 		width: 320,
@@ -142,17 +177,23 @@ const styles = StyleSheet.create({
 			height: 1,
 		},
 		shadowOpacity: 0.5,
+		marginBottom: 20,
 	},
 	card1: {
 		backgroundColor: "#03cafc",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	card2: {
 		backgroundColor: "#03fc56",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	label: {
 		padding: 20,
 		textAlign: "center",
 		alignSelf: "center",
+		justifyContent: "center",
 		fontSize: 24,
 		color: "#ffffff",
 	},
@@ -161,23 +202,38 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center",
 		width: 320,
+		marginBottom: 20,
+		marginLeft: 10,
+		marginRight: 10,
 	},
 	answer: {
 		marginTop: 20,
 		marginBottom: 10,
 	},
-	correct: {
-		fontSize: 30,
-		color: "green",
+	thumbsUp: {
 		textAlign: "center",
 		marginTop: 20,
-		marginBottom: 10,
+		color: "green",
+	},
+	thumbsDown: {
+		textAlign: "center",
+		marginTop: 20,
+		color: "red",
 	},
 	disabled: {
-		color: "grey"
+		color: "grey",
+		textAlign: "center",
+		marginTop: 20,
+	},
+	button: {
+		borderColor: "blue",
+		borderWidth: 2,
+		backgroundColor: "blue",
+		borderRadius: 5,
+		color: "blue",
 	},
 	delete: {
-		fontSize: 12,
+		fontSize: 16,
 		color: "red",
 		textAlign: "center",
 		marginTop: 20,
